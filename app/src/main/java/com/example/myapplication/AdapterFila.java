@@ -27,11 +27,11 @@ public class AdapterFila extends RecyclerView.Adapter<AdapterFila.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull AdapterFila.ViewHolder holder, int position) {
-
+        holder.txt.setText((position + 1) + " ," + lista.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return lista.size();
     }
 }

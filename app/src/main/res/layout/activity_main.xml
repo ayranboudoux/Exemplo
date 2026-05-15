@@ -20,7 +20,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Minerar Ouro"/>
+        android:text="Minerar Ouro"
+        android:onClick="minerar"/>
 
     <Spinner
         android:id="@+id/spinner"
@@ -30,12 +31,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Adicionar á fila"/>
+        android:text="Adicionar á fila"
+        android:onClick="adicionarFila"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar produção"/>
+        android:text="Iniciar produção"
+        android:onClick="iniciarProducao"/>
 
     <TextView
         android:id="@+id/txtProduzindo"
@@ -52,7 +55,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Vender item"/>
+        android:text="Vender item"
+        android:onClick="venderItem"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

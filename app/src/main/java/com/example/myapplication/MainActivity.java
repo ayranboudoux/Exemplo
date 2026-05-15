@@ -2,10 +2,12 @@ package com.example.myapplication;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView txtOuro, txtProduzinho;
+    private TextView txtOuro, txtProduzindo;
     private Spinner spinner;
     private ProgressBar progress;
     private RecyclerView recycler;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         txtOuro = findViewById(R.id.txtOuro);
-        txtProduzinho = findViewById(R.id.txtProduzindo);
+        txtProduzindo = findViewById(R.id.txtProduzindo);
         spinner = findViewById(R.id.spinner);
         progress = findViewById(R.id.progres);
         recycler = findViewById(R.id.recycler);
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     tempoAtual++;
                     progress.setMax(atual.getTempo());
                     progress.setProgress(tempoAtual);
-                    txtProduzinho.setText("Produzindo: " + atual.getNome());
+                    txtProduzindo.setText("Produzindo: " + atual.getNome());
                     if(tempoAtual >= atual.getTempo()){
                         pronto = fila.peek();
                         produzindo = false;
@@ -85,6 +88,54 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.post(timer);
+    }
+
+    public void minerar(View v){
+        int ganho = new Random().nextInt(50) + 10;
+        ouro += ganho;
+        Toast.makeText(this, "+"+ganho+" ouro", Toast.LENGTH_SHORT).show();;
+        atualizarTela();
+    }
+
+    public void adicionarFila(View v){
+        ItemForja item = (ItemForja) spinner.getSelectedItem();
+        if(ouro < item.getCusto()){
+            Toast.makeText(this, "Ouro insuficiente", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ouro -= item.getCusto();
+        fila.add(item);
+        atualizarFila();
+        atualizarTela();
+    }
+
+    public void iniciarProducao(View v){
+        if(fila.isEmpty()){
+            Toast.makeText(this, "Fila vazia", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(produzindo){
+            Toast.makeText(this, "Ja produzindo", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        tempoAtual = 0;
+        produzindo = true;
+        atualizarTela();
+    }
+
+    private void atualizarTela() {
+        txtOuro.setText("Ouro: " + ouro);
+        if(pronto != null){
+            txtProduzindo.setText("Pronto: " + pronto.getNome());
+            progress.setProgress(0);
+        }else if(produzindo){
+            ItemForja atual = fila.peek();
+            txtProduzindo.setText("Produzindo: " + atual.getNome());
+
+        }else{
+            txtProduzindo.setText("Parado");
+            progress.setProgress(0);
+        }
     }
 
     private void configurarSpinner() {

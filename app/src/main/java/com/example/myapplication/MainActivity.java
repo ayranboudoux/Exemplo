@@ -123,6 +123,26 @@ public class MainActivity extends AppCompatActivity {
         atualizarTela();
     }
 
+    public void venderItem(View v){
+        if(pronto == null){
+            Toast.makeText(this, "Nada pronto", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ouro += pronto.getValorVenda();
+        Toast.makeText(this, pronto.getNome() + "vendido por " + pronto.getValorVenda() + " ouro", Toast.LENGTH_SHORT).show();
+        fila.poll();
+        pronto = null;
+        atualizarFila();
+        atualizarTela();
+
+    }
+
+    private void atualizarFila() {
+        lista.clear();
+        lista.addAll(fila);
+        adapter.notifyDataSetChanged();
+    }
+
     private void atualizarTela() {
         txtOuro.setText("Ouro: " + ouro);
         if(pronto != null){

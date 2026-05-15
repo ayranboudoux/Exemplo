@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,11 +28,21 @@ public class AdapterFila extends RecyclerView.Adapter<AdapterFila.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull AdapterFila.ViewHolder holder, int position) {
-
+        holder.txt.setText((position + 1) + " ," + lista.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return lista.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        TextView txt;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txt = itemView.findViewById(android.R.id.text1);
+        }
+
     }
 }
